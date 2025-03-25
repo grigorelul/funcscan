@@ -3,23 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## v2.3.0 - dev - [date]
+## v2.2.0 - dev - [date]
 
 ### `Added`
 
 ### `Fixed`
 
-### `Dependencies`
-
-### `Deprecated`
-
-## v2.2.0 - André Cidade - [2025-3-25]
-
-### `Added`
-
-### `Fixed`
-
-- [#469](https://github.com/nf-core/funcscan/pull/469) Changed descriptions from 'nextflow_schema.json' and 'schema_input.json'.
+- [#469](https://github.com/nf-core/funcscan/pull/469) Updated descriptions from 'nextflow_schema.json' and 'schema_input.json'.
 
 ### `Dependencies`
 
