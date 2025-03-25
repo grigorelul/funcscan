@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Fixed`
 
-- Changed descriptions from 'nextflow_schema.json' and 'schema_input.json'.
+- [#469](https://github.com/nf-core/funcscan/pull/469) Changed descriptions from 'nextflow_schema.json' and 'schema_input.json'.
 
 ### `Dependencies`
 
