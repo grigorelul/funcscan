@@ -41,8 +41,7 @@
                     "description": "MultiQC report title. Printed as page header, used for filename if not otherwise specified.",
                     "fa_icon": "fas fa-file-signature"
                 }
-            },
-            "help_text": ""
+            }
         },
         "screening_type_activation": {
             "title": "Screening type activation",
@@ -1408,7 +1407,7 @@
                     "description": "The p-value cutoff for protein domains to be included.",
                     "fa_icon": "fas fa-filter",
                     "default": 1e-9,
-                    "help_text": "The p-value cutoff for protein domains to be included.\n\nFor more information see the GECCO [documentation](https://github.com/zellerlab/GECCO).\n\n> Modifies tool parameter(s):\n> - GECCO: `--pfilter`"
+                    "help_text": "For more information see the GECCO [documentation](https://github.com/zellerlab/GECCO).\n\n> Modifies tool parameter(s):\n> - GECCO: `--pfilter`"
                 },
                 "bgc_gecco_threshold": {
                     "type": "number",

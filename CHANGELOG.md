@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Fixed`
 
+- [#469](https://github.com/nf-core/funcscan/pull/469) Updated descriptions from 'nextflow_schema.json' and 'schema_input.json'.
+
 ### `Dependencies`
 
 ### `Deprecated`
