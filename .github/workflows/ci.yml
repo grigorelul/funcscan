@@ -101,7 +101,7 @@ jobs:
           sudo add-apt-repository universe
           sudo apt-get update
           sudo apt-get install -y uidmap squashfs-tools
-          
+
       - name: Set up Apptainer
         if: matrix.profile == 'singularity'
         uses: eWaterCycle/setup-apptainer@main
