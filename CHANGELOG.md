@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Added`
 
+- [#477](https://github.com/nf-core/funcscan/pull/477) Updated to nf-core template 3.2.1. (by @jasmezz)
+
 ### `Fixed`
 
 - [#469](https://github.com/nf-core/funcscan/pull/469) Updated descriptions from 'nextflow_schema.json' and 'schema_input.json'. (by @andreirie)
