@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### `Added`
 
 - [#477](https://github.com/nf-core/funcscan/pull/477) Updated to nf-core template 3.2.1. (by @jasmezz)
+- [#478](https://github.com/nf-core/funcscan/pull/478) Updated to the latest version of antiSMASH tool/database. (suggested by @amizeranschi, added by @mberacochea and @jfy133)
 
 ### `Fixed`
 
@@ -22,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Deprecated`
 
-- [#478](https://github.com/nf-core/funcscan/pull/478) - removed `--bgc_antismash_installdir` as new antiSMASH module container no longer requires mounting of this directory for execution. (by @mberacochea and @jfy133)
+- [#478](https://github.com/nf-core/funcscan/pull/478) Removed `--bgc_antismash_installdir` as new antiSMASH module container no longer requires mounting of this directory for execution. (by @mberacochea and @jfy133)
 
 ## v2.1.0 - Egyptian Koshari - [2025-03-05]
 
