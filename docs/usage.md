@@ -464,19 +464,21 @@ nf-core/funcscan can download these databases for you, however this is very slow
 
 To supply the database directories to the pipeline:
 
-1. Install antiSMASH from [bioconda](https://bioconda.github.io/recipes/antismash-lite/README.html). To ensure database compatibility, please use the same version as is used in your nf-core/funcscan release (check version in file `<pipeline_installation>/<path>/funcscan/modules/nf-core/antismash/antismashlite/environment.yml`).
+1. Install antiSMASH. To ensure database compatibility, please use the same version as is used in your nf-core/funcscan release (check version in file `<pipeline_installation>/<path>/funcscan/modules/nf-core/antismash/antismash/environment.yml`).
 
-```bash
-conda create -n antismash-lite -c bioconda antismash-lite
-conda activate antismash-lite
-```
+   For example installing via [bioconda](https://bioconda.github.io/recipes/antismash-lite/README.html):
+
+   ```bash
+   conda create -n antismash-lite -c bioconda antismash-lite
+   conda activate antismash-lite
+   ```
 
 2. Run the command `download-antismash-databases`. Use `--database-dir` to specify a new location.
 3. You can then supply the paths to the resulting databases and the whole installation directory with:
 
-```bash
---bgc_antismash_db '/<path>/<to>/<antismash>/<db>/'
-```
+   ```bash
+   --bgc_antismash_db '/<path>/<to>/<antismash>/<db>/'
+   ```
 
 The contents of the database directory should include directories such as `as-js/`, `clusterblast/`, `clustercompare/` etc. in the top level.
 
