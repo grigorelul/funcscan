@@ -1,25 +1,13 @@
-process ANTISMASH_ANTISMASHLITE {
+process ANTISMASH_ANTISMASH {
     tag "${meta.id}"
     label 'process_medium'
 
     conda "${moduleDir}/environment.yml"
-    container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'https://depot.galaxyproject.org/singularity/antismash-lite:7.1.0--pyhdfd78af_0'
-        : 'biocontainers/antismash-lite:7.1.0--pyhdfd78af_0'}"
-
-    containerOptions {
-        ['singularity', 'apptainer'].contains(workflow.containerEngine)
-            ? "-B ${antismash_dir}:/usr/local/lib/python3.10/site-packages/antismash"
-            : workflow.containerEngine == 'docker'
-                ? "-v \$PWD/${antismash_dir}:/usr/local/lib/python3.10/site-packages/antismash"
-                : ''
-    }
+    container "nf-core/antismash:8.0.0"
 
     input:
     tuple val(meta), path(sequence_input)
     path databases
-    path antismash_dir
-    // Optional input: AntiSMASH installation folder. It is not needed for using this module with conda, but required for docker/singularity (see meta.yml).
     path gff
 
     output:
@@ -66,7 +54,7 @@ process ANTISMASH_ANTISMASHLITE {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        antismash-lite: \$(echo \$(antismash --version) | sed 's/antiSMASH //;s/-.*//g')
+        antismash: \$(echo \$(antismash --version) | sed 's/antiSMASH //;s/-.*//g')
     END_VERSIONS
     """
 
@@ -91,7 +79,7 @@ process ANTISMASH_ANTISMASHLITE {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        antismash-lite: \$(echo \$(antismash --version) | sed 's/antiSMASH //;s/-.*//g')
+        antismash: \$(echo \$(antismash --version) | sed 's/antiSMASH //;s/-.*//g')
     END_VERSIONS
     """
 }
