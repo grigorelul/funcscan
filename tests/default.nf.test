@@ -31,7 +31,7 @@ nextflow_pipeline {
                     // All files with stable contents
                     stable_path
                 ).match() },
-                
+
                 { assert new File("$outputDir/pipeline_info/nf_core_funcscan_software_mqc_versions.yml").exists() },
                 { assert new File("$outputDir/multiqc/multiqc_report.html").exists() },
 
