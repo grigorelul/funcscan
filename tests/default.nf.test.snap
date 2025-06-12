@@ -7,7 +7,7 @@
             "nf-test": "0.9.2",
             "nextflow": "24.10.4"
         },
-        "timestamp": "2025-06-12T09:51:42.621956287"
+        "timestamp": "2025-06-12T13:51:00.291965487"
     },
     "abricate": {
         "content": [
@@ -18,7 +18,7 @@
             "nf-test": "0.9.2",
             "nextflow": "24.10.4"
         },
-        "timestamp": "2025-06-12T09:51:41.942285256"
+        "timestamp": "2025-06-12T13:50:59.630298022"
     },
     "fargene": {
         "content": [
@@ -31,57 +31,9 @@
             "nf-test": "0.9.2",
             "nextflow": "24.10.4"
         },
-        "timestamp": "2025-06-12T09:51:42.474492328"
+        "timestamp": "2025-06-12T13:51:00.127146806"
     },
-    "rgi": {
-        "content": [
-            "sample_1.txt:md5,fce130af51f93cccfc09ddaf9caf623f",
-            "sample_2.txt:md5,fce130af51f93cccfc09ddaf9caf623f"
-        ],
-        "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "24.10.4"
-        },
-        "timestamp": "2025-06-12T09:51:42.32549486"
-    },
-    "deeparg_tsv_ARG": {
-        "content": [
-            "sample_1.align.daa.tsv:md5,21822364379fe8f991d27cdb52a33d1d",
-            "sample_2.align.daa.tsv:md5,d59287f357de198639bdca5dbaede173",
-            "sample_1.mapping.ARG:md5,0e049e99eab4c55666062df21707d5b9",
-            "sample_2.mapping.ARG:md5,0e049e99eab4c55666062df21707d5b9"
-        ],
-        "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "24.10.4"
-        },
-        "timestamp": "2025-06-12T09:51:41.748864176"
-    },
-    "ampir": {
-        "content": [
-            true,
-            true,
-            true,
-            true
-        ],
-        "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "24.10.4"
-        },
-        "timestamp": "2025-06-12T09:51:41.001023376"
-    },
-    "ampcombi_logfiles": {
-        "content": [
-            "Ampcombi_cluster.log:md5,4c78f5f134edf566f39e04e3ab7d8558",
-            "Ampcombi_complete.log:md5,3dabfea4303bf94bd4f5d78c5b8c83c1"
-        ],
-        "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "24.10.4"
-        },
-        "timestamp": "2025-06-12T09:51:41.549045666"
-    },
-    "test_profile": {
+    "-profile test": {
         "content": [
             55,
             {
@@ -1018,14 +970,14 @@
                 "reports/hamronization_summarize/versions.yml"
             ],
             [
-                "sample_1.ampir.faa:md5,16b56f31240b9403bde0214fe8e5ba95",
-                "sample_1.ampir.tsv:md5,27f7451d0c1ee8e4786d236e2f334747",
-                "sample_2.ampir.faa:md5,ae8fcf390bbabfdaa61921a50e08f282",
-                "sample_2.ampir.tsv:md5,66cb6ca6c9da395ed6ffac47765e4f60",
+                "sample_1.ampir.faa:md5,3241bd074a8a8d28c3ab106df1b53aaa",
+                "sample_1.ampir.tsv:md5,8674971fc27e257092eba321532cef53",
+                "sample_2.ampir.faa:md5,473542ac590ae0d59089a1f6b1881a6c",
+                "sample_2.ampir.tsv:md5,c5625e1140a1b37f2a4e07fafcc03f5b",
                 "sample_1.amplify.tsv:md5,1b43cb751be12f27a136a7d9574597c5",
                 "sample_2.amplify.tsv:md5,28fdbfce27ef8157ebfe62f0db2e7094",
-                "sample_1_mybacteriocin.hmmer_hmmsearch.txt.gz:md5,3c9c559ffd8c1ec7cd5440399025017d",
-                "sample_2_mybacteriocin.hmmer_hmmsearch.txt.gz:md5,f03fbbb31682d24cc778c1ad4da9976d",
+                "sample_1_mybacteriocin.hmmer_hmmsearch.txt.gz:md5,4780845407dea360d246813461d04c56",
+                "sample_2_mybacteriocin.hmmer_hmmsearch.txt.gz:md5,96cf0ae2e5f91d409fbe6ad87a278ffc",
                 "README.md:md5,cf088d9256ff7b7730699f17b64b4028",
                 "sample_1.macrel.all_orfs.faa.gz:md5,844bb10e2f84e1a2b2db56eb36391dcf",
                 "sample_1.macrel.prediction.gz:md5,9553e1dae8a5b912da8d74fa3f1cd9eb",
@@ -1040,26 +992,26 @@
                 "sample_2.txt:md5,69af3321b0bc808b7ef85f102395736f",
                 "sample_1.tsv:md5,b4d261ace9be7d013c19d1f5c0005bfe",
                 "sample_2.tsv:md5,b4d261ace9be7d013c19d1f5c0005bfe",
-                "sample_1.align.daa:md5,8a8eba7646c58fe1ebb81676e5b5c743",
+                "sample_1.align.daa:md5,cfbabc5cfc74516b4a0c070a3d6c1aa8",
                 "sample_1.align.daa.tsv:md5,21822364379fe8f991d27cdb52a33d1d",
                 "sample_1.mapping.ARG:md5,0e049e99eab4c55666062df21707d5b9",
                 "sample_1.mapping.potential.ARG:md5,0e049e99eab4c55666062df21707d5b9",
-                "sample_2.align.daa:md5,843387c763d3d681d16202a8e8cd7336",
+                "sample_2.align.daa:md5,e37a69ca44de8beaa0f434a62f8abbde",
                 "sample_2.align.daa.tsv:md5,d59287f357de198639bdca5dbaede173",
                 "sample_2.mapping.ARG:md5,0e049e99eab4c55666062df21707d5b9",
                 "sample_2.mapping.potential.ARG:md5,0e049e99eab4c55666062df21707d5b9",
-                "sample_1-class_A-hmmsearched.out:md5,bb2f05afbf41b051dc57571dadc705cb",
+                "sample_1-class_A-hmmsearched.out:md5,dd8477f1e14b20e135dcaa73f6134efa",
                 "results_summary.txt:md5,690d351cfc52577263ef4cfab1c81f50",
-                "sample_1-class_B_1_2-hmmsearched.out:md5,524720d7d0c55d64d882a0181ba1a19c",
+                "sample_1-class_B_1_2-hmmsearched.out:md5,616bfc0e6ef82dc09514411d97005427",
                 "results_summary.txt:md5,f69af9b0e18a0cfc934eb18b7e4bffe1",
-                "sample_1-class_a.log:md5,73016c13ada327ca1d80ea06e85cae80",
-                "sample_1-class_b_1_2.log:md5,a4d388f947434d841fe93ca502e48279",
-                "sample_2-class_A-hmmsearched.out:md5,b423b0522882c301e01cb06fc8c8d995",
+                "sample_1-class_a.log:md5,27fb68b9d33f6c0683c1c3ed209e59e6",
+                "sample_1-class_b_1_2.log:md5,364e9eaf59868d3cbcaccf95cb0b3313",
+                "sample_2-class_A-hmmsearched.out:md5,3276fac66a3c2ef62db5859861c871e3",
                 "results_summary.txt:md5,690d351cfc52577263ef4cfab1c81f50",
-                "sample_2-class_B_1_2-hmmsearched.out:md5,59eed020393f4a67d5059af8d7c0b289",
+                "sample_2-class_B_1_2-hmmsearched.out:md5,45ef3f76c4fe71fa3ff4dc302b830691",
                 "results_summary.txt:md5,f69af9b0e18a0cfc934eb18b7e4bffe1",
-                "sample_2-class_a.log:md5,7f04f24da07fd0737fc7a7941ed407d4",
-                "sample_2-class_b_1_2.log:md5,f1929c763abf52761a4855934e47e331",
+                "sample_2-class_a.log:md5,d8b6d4f807ce5c787ddc8c7d37577716",
+                "sample_2-class_b_1_2.log:md5,9720e7296e9c166fd767d6a73626ba2d",
                 "sample_1.txt.abricate.tsv:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "sample_2.txt.abricate.tsv:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "sample_1.tsv.amrfinderplus.tsv:md5,d41d8cd98f00b204e9800998ecf8427e",
@@ -1077,8 +1029,8 @@
                 "Ampcombi_complete.log:md5,3dabfea4303bf94bd4f5d78c5b8c83c1",
                 "Ampcombi_parse_tables.log:md5,e19c120dff9168b33d8dbb8c2c426fc6",
                 "Ampcombi_summary.tsv:md5,416986cc17d6844b531364f3bfe92a36",
-                "Ampcombi_summary_cluster.tsv:md5,9ff3f785fdef73c4613c717789ae56af",
-                "Ampcombi_summary_cluster_representative_seq.tsv:md5,daab1692972b74201b28da0aa7f1ff57",
+                "Ampcombi_summary_cluster.tsv:md5,d63e56f109ff05c427c8112363d13365",
+                "Ampcombi_summary_cluster_representative_seq.tsv:md5,60451d54ab04e00c1122ea0dfc92b6d9",
                 "general_amps_2025_06_12.fasta:md5,7e1df54ba979681312558ccb892be16a",
                 "general_amps_2025_06_12.txt:md5,d937ae18a076345302c6c4b9bf2e3bef",
                 "ref_DB:md5,64fd3000acb7d4d775ed49e8e5ddd7fa",
@@ -1803,7 +1755,55 @@
             "nf-test": "0.9.2",
             "nextflow": "24.10.4"
         },
-        "timestamp": "2025-06-12T10:44:42.241890935"
+        "timestamp": "2025-06-12T13:50:58.40015367"
+    },
+    "rgi": {
+        "content": [
+            "sample_1.txt:md5,fce130af51f93cccfc09ddaf9caf623f",
+            "sample_2.txt:md5,fce130af51f93cccfc09ddaf9caf623f"
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "24.10.4"
+        },
+        "timestamp": "2025-06-12T13:50:59.970056092"
+    },
+    "deeparg_tsv_ARG": {
+        "content": [
+            "sample_1.align.daa.tsv:md5,21822364379fe8f991d27cdb52a33d1d",
+            "sample_2.align.daa.tsv:md5,d59287f357de198639bdca5dbaede173",
+            "sample_1.mapping.ARG:md5,0e049e99eab4c55666062df21707d5b9",
+            "sample_2.mapping.ARG:md5,0e049e99eab4c55666062df21707d5b9"
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "24.10.4"
+        },
+        "timestamp": "2025-06-12T13:50:59.451893632"
+    },
+    "ampir": {
+        "content": [
+            true,
+            true,
+            true,
+            true
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "24.10.4"
+        },
+        "timestamp": "2025-06-12T13:50:58.762474227"
+    },
+    "ampcombi_logfiles": {
+        "content": [
+            "Ampcombi_cluster.log:md5,4c78f5f134edf566f39e04e3ab7d8558",
+            "Ampcombi_complete.log:md5,3dabfea4303bf94bd4f5d78c5b8c83c1"
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "24.10.4"
+        },
+        "timestamp": "2025-06-12T13:50:59.270534036"
     },
     "amplify": {
         "content": [
@@ -1814,7 +1814,7 @@
             "nf-test": "0.9.2",
             "nextflow": "24.10.4"
         },
-        "timestamp": "2025-06-12T09:51:41.214195746"
+        "timestamp": "2025-06-12T13:50:58.955107983"
     },
     "macrel": {
         "content": [
@@ -1833,7 +1833,7 @@
             "nf-test": "0.9.2",
             "nextflow": "24.10.4"
         },
-        "timestamp": "2025-06-12T09:51:41.382896074"
+        "timestamp": "2025-06-12T13:50:59.112552714"
     },
     "amrfinderplus": {
         "content": [
@@ -1844,6 +1844,6 @@
             "nf-test": "0.9.2",
             "nextflow": "24.10.4"
         },
-        "timestamp": "2025-06-12T09:51:42.134679044"
+        "timestamp": "2025-06-12T13:50:59.799500449"
     }
 }
