@@ -6,7 +6,7 @@ nextflow_pipeline {
     tag "nfcore_funcscan"
     tag "test_minimal"
 
-    test("test_minimal_profile") {
+    test("-profile test_minimal") {
 
         when {
             params {

@@ -6,7 +6,7 @@ nextflow_pipeline {
     tag "nfcore_funcscan"
     tag "test_taxonomy_pyrodigal"
 
-    test("test_taxonomy_pyrodigal") {
+    test("-profile test_taxonomy_pyrodigal") {
 
         when {
             params {
