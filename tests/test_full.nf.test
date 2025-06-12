@@ -5,6 +5,7 @@ nextflow_pipeline {
     tag "pipeline"
     tag "nfcore_funcscan"
     tag "test_full"
+    profile "test_full"
 
     test("-profile test_full") {
 

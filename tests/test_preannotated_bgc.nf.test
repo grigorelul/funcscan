@@ -5,6 +5,7 @@ nextflow_pipeline {
     tag "pipeline"
     tag "nfcore_funcscan"
     tag "test_preannotated_bgc"
+    profile "test_preannotated_bgc"
 
     test("-profile test_preannotated_bgc") {
 
