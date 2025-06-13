@@ -2,9 +2,7 @@
     Run BGC screening tools
 */
 
-include { UNTAR as UNTAR_CSS                     } from '../../modules/nf-core/untar/main'
-include { UNTAR as UNTAR_DETECTION               } from '../../modules/nf-core/untar/main'
-include { UNTAR as UNTAR_MODULES                 } from '../../modules/nf-core/untar/main'
+include { UNTAR as UNTAR_ANTISMASHDB             } from '../../modules/nf-core/untar/main'
 include { ANTISMASH_ANTISMASHDOWNLOADDATABASES   } from '../../modules/nf-core/antismash/antismashdownloaddatabases/main'
 include { ANTISMASH_ANTISMASH                    } from '../../modules/nf-core/antismash/antismash/main'
 include { GECCO_RUN                              } from '../../modules/nf-core/gecco/run/main'
@@ -35,7 +33,11 @@ workflow BGC {
     if (!params.bgc_skip_antismash) {
         // Check whether user supplies database and/or antismash directory. If not, obtain them via the module antismash/antismashdownloaddatabases.
         // Important for future maintenance: For CI tests, only the "else" option below is used. Both options should be tested locally whenever the antiSMASH module gets updated.
-        if (params.bgc_antismash_db) {
+        if (params.bgc_antismash_db && file(params.bgc_antismash_db, checkIfExists: true).extension == 'gz') {
+            UNTAR_ANTISMASHDB([[id: 'antismashdb'], file(params.bgc_antismash_db, checkIfExists: true)])
+            ch_antismash_databases = UNTAR_ANTISMASHDB.out.untar.map { _meta, dir -> [dir] }
+        }
+        else if (params.bgc_antismash_db && file(params.bgc_antismash_db, checkIfExists: true).isDirectory()) {
             ch_antismash_databases = Channel.fromPath(params.bgc_antismash_db, checkIfExists: true).first()
         }
         else {
@@ -58,7 +60,7 @@ workflow BGC {
         ch_antismashresults_for_combgc = ch_antismashresults
             .join(fastas, remainder: false)
             .join(ANTISMASH_ANTISMASH.out.gbk_results, remainder: false)
-            .map { meta, gbk_input, fasta, gbk_results ->
+            .map { meta, gbk_input, _fasta, _gbk_results ->
                 [meta, gbk_input]
             }
 
