@@ -2,7 +2,6 @@ nextflow_pipeline {
 
     name "Test pipeline: NFCORE_FUNCSCAN"
     script "main.nf"
-    tag "pipeline"
     tag "nfcore_funcscan"
     tag "test_full"
     profile "test_full"
