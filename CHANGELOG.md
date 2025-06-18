@@ -7,8 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Added`
 
-- [#477](https://github.com/nf-core/funcscan/pull/477) Updated to nf-core template 3.2.1. (by @jasmezz)
-- [#478](https://github.com/nf-core/funcscan/pull/478) Updated to the latest version of antiSMASH tool/database. (suggested by @amizeranschi, added by @mberacochea and @jfy133)
+- [#477](https://github.com/nf-core/funcscan/pull/477), [#480](https://github.com/nf-core/funcscan/pull/477) Updated to nf-core template 3.2.1., 3.3.1 (by @jasmezz, @jfy133)
 
 ### `Fixed`
 
