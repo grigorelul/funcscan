@@ -5,8 +5,9 @@ nextflow_pipeline {
     tag "pipeline"
     tag "nfcore_funcscan"
     tag "test_preannotated"
+    profile "test_preannotated"
 
-    test("test_preannotated_profile") {
+    test("-profile test_preannotated") {
 
         when {
             params {
