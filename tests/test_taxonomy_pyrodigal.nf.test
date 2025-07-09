@@ -35,7 +35,7 @@ nextflow_pipeline {
                     file("$outputDir/amp/amplify/sample_1/sample_1.amplify.tsv").text.contains("NODE_11237_length_1334_cov_2.500391_2"),
                     file("$outputDir/amp/amplify/sample_2/sample_2.amplify.tsv").text.contains("NODE_11237_length_1334_cov_2.500391_2")
                 ).match("amplify") },
-                
+
                 // Macrel
                 { assert snapshot (
                     path("$outputDir/amp/macrel/sample_1.macrel/sample_1.macrel.smorfs.faa.gz"),
