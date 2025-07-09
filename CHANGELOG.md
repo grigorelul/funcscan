@@ -7,13 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Added`
 
-- [#477](https://github.com/nf-core/funcscan/pull/477), [#480](https://github.com/nf-core/funcscan/pull/477) Updated to nf-core template 3.2.1., 3.3.1 (by @jasmezz, @jfy133)
+- [#477](https://github.com/nf-core/funcscan/pull/477), [#480](https://github.com/nf-core/funcscan/pull/477), [#484](https://github.com/nf-core/funcscan/pull/484) Updated to nf-core template 3.2.1., 3.3.1, 3.3.2 (by @jasmezz, @jfy133)
 
 ### `Fixed`
 
 - [#469](https://github.com/nf-core/funcscan/pull/469) Updated descriptions from 'nextflow_schema.json' and 'schema_input.json'. (by @andreirie)
 - [#471](https://github.com/nf-core/funcscan/pull/471) Fixed fARGene config parameter `ext.args`. (by @jasmezz)
-- [#479](https://github.com/nf-core/funcscan/pull/479) Fixed ABRicate report file not using correct pipeline sample ID as ID (fix by @jasmezz, @jfy133)
+- [#479](https://github.com/nf-core/funcscan/pull/479) Fixed ABRicate report file not using correct pipeline sample ID as ID. (fix by @jasmezz, @jfy133)
 
 ### `Dependencies`
 
