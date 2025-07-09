@@ -17,7 +17,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Dependencies`
 
+| Tool      | Previous Version | New Version |
+| --------- | ---------------- | ----------- |
+| antiSMASH | 7.1.0            | 8.0.1       |
+
 ### `Deprecated`
+
+- [#478](https://github.com/nf-core/funcscan/pull/478) Removed `--bgc_antismash_installdir` as new antiSMASH module container no longer requires mounting of this directory for execution. (by @mberacochea and @jfy133)
 
 ## v2.1.0 - Egyptian Koshari - [2025-03-05]
 
