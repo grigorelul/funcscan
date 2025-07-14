@@ -1212,13 +1212,7 @@
                     "type": "string",
                     "description": "Path to user-defined local antiSMASH database.",
                     "fa_icon": "fas fa-database",
-                    "help_text": "It is recommend to pre-download the antiSMASH databases to your machine and pass the path of it to this parameter, as this can take a long time to download - particularly when running lots of pipeline runs.\n\nThe contents of the database directory should include directories such as `as-js/`, `clusterblast/`, `clustercompare/` etc. in the top level.\n\nSee the pipeline [documentation](https://nf-co.re/funcscan/usage#antismash-1) for details on how to download this. If running with docker or singularity, please also check `--bgc_antismash_installdir` for important information."
-                },
-                "bgc_antismash_installdir": {
-                    "type": "string",
-                    "description": "Path to user-defined local antiSMASH directory. Only required when running with docker/singularity.",
-                    "fa_icon": "far fa-folder-open",
-                    "help_text": "This is required when running with **docker and singularity** (not required for conda), due to attempted 'modifications' of files during database checks in the installation directory, something that cannot be done in immutable docker/singularity containers.\n\nTherefore, a local installation directory needs to be mounted (including all modified files from the downloading step) to the container as a workaround.\n\nThe contents of the installation directory should include directories such as `common/` `config/` and files such as `custom_typing.py` `custom_typing.pyi` etc. in the top level.\n\nSee the pipeline [documentation](https://nf-co.re/funcscan/usage#antismash-1) for details on how to download this. If running with docker or singularity, please also check `--bgc_antismash_installdir` for important information."
+                    "help_text": "It is recommend to pre-download the antiSMASH databases to your machine and pass the path of it to this parameter, as this can take a long time to download - particularly when running lots of pipeline runs.\n\nThe contents of the database directory should include directories such as `as-js/`, `clusterblast/`, `clustercompare/` etc. in the top level.\n\nSee the pipeline [documentation](https://nf-co.re/funcscan/usage#antismash-1) for details on how to download this."
                 },
                 "bgc_antismash_contigminlength": {
                     "type": "integer",
