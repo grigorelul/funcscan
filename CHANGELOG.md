@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### `Added`
 
 - [#477](https://github.com/nf-core/funcscan/pull/477), [#480](https://github.com/nf-core/funcscan/pull/477), [#484](https://github.com/nf-core/funcscan/pull/484) Updated to nf-core template 3.2.1., 3.3.1, 3.3.2 (by @jasmezz, @jfy133)
+- [#482](https://github.com/nf-core/funcscan/pull/482) Added vertical workflow diagram. (by @jasmezz)
 
 ### `Fixed`
 
