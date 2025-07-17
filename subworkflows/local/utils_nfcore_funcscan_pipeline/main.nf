@@ -184,7 +184,7 @@ def toolCitationText() {
         !params.arg_skip_amrfinderplus ? "AMRfinderplus (Feldgarden et al. 2021)," : "",
         !params.arg_skip_deeparg ? "deepARG (Arango-Argoty 2018)," : "",
         !params.arg_skip_abricate ? "ABRicate (Seemann 2020)," : "",
-        !params.arg_skip_argnorm ? ". The outputs from ARG screening tools were normalized to the antibiotic resistance ontology using argNorm (Perovic et al. 2025)," : "",
+        !params.arg_skip_argnorm ? ". The outputs from ARG screening tools were normalized to the antibiotic resistance ontology using argNorm (Ugarcina Perovic et al. 2025)," : "",
         ". The output from the antimicrobial resistance gene screening tools were standardised and summarised with hAMRonization (Maguire et al. 2023).",
     ].join(' ').trim().replaceAll(', +.', ".")
 
