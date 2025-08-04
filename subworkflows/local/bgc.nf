@@ -65,6 +65,16 @@ workflow BGC {
             }
 
         ch_bgcresults_for_combgc = ch_bgcresults_for_combgc.mix(ch_antismashresults_for_combgc)
+
+        ch_antismash_dirs = ANTISMASH_ANTISMASH.out.html 
+            .map { meta, html -> 
+                html.parent
+            } 
+            .collect() 
+            .map { dirs ->
+                [[id: 'bigslice_antismash_dirs'], dirs]
+            }
+
     }
 
     // DEEPBGC
