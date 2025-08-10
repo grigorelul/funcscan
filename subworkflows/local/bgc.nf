@@ -12,6 +12,9 @@ include { DEEPBGC_PIPELINE                       } from '../../modules/nf-core/d
 include { COMBGC                                 } from '../../modules/local/combgc'
 include { TABIX_BGZIP as BGC_TABIX_BGZIP         } from '../../modules/nf-core/tabix/bgzip/main'
 include { MERGE_TAXONOMY_COMBGC                  } from '../../modules/local/merge_taxonomy_combgc'
+include { BIGSLICE_PREP_INPUT } from '../../modules/local/bigslice_prep_input/main'
+include { BIGSLICE_RUN        } from '../../modules/local/bigslice_run/main'
+
 
 workflow BGC {
     take:
@@ -66,14 +69,44 @@ workflow BGC {
 
         ch_bgcresults_for_combgc = ch_bgcresults_for_combgc.mix(ch_antismashresults_for_combgc)
 
-        ch_antismash_dirs = ANTISMASH_ANTISMASH.out.html 
-            .map { meta, html -> 
-                html.parent
-            } 
-            .collect() 
-            .map { dirs ->
-                [[id: 'bigslice_antismash_dirs'], dirs]
-            }
+                // ---- BiG-SLiCE (doar dacă a fost cerut) ----
+        if (params.run_bigslice) {
+
+            /*
+             * 1) Construim MANIFEST-ul din rezultatele antiSMASH
+             *    fiecare linie: <SAMPLE_ID>\t<CALE_DIR_ANTISMASH>
+             *    folosim .collect() ca barieră -> așteptăm toate probele
+             */
+            def ch_bigslice_manifest =
+                ANTISMASH_ANTISMASH.out.html
+                    .map { meta, html ->
+                        def sid = meta?.id ?: html.parent.name
+                        "${sid}\t${html.parent}"
+                    }
+                    .collect()
+                    .map { lines -> lines.join('\n') }
+
+            /*
+             * 2) Pregătim inputul pentru BiG-SLiCE:
+             *    copiem doar .gbk în ${params.bigslice_input_root}/${params.bigslice_dataset_name}/<SID>/
+             *    creăm taxonomy/dataset_taxonomy.tsv (din parametru sau placeholder "Unknown")
+             */
+            BIGSLICE_PREP_INPUT(
+                ch_bigslice_manifest,
+                file(params.bigslice_taxonomy)
+            )
+            ch_versions = ch_versions.mix(BIGSLICE_PREP_INPUT.out.versions)
+
+            /*
+             * 3) Rulăm BiG-SLiCE pe dataset-ul pregătit
+             */
+            BIGSLICE_RUN(
+                BIGSLICE_PREP_INPUT.out.input_dir,     // dir-ul creat la pasul anterior
+                file(params.bigslice_models)            // folderul cu modelele BiG-SLiCE
+            )
+            ch_versions = ch_versions.mix(BIGSLICE_RUN.out.versions)
+        }
+
 
     }
 
