@@ -1604,36 +1604,30 @@
         },
 
     "bigslice_options": {
-        "title": "BiG-SLiCE",
-        "description": "Prepare antiSMASH GBKs and run BiG-SLiCE",
-        "type": "object",
-        "properties": {
-        "run_bigslice": {
-            "type": "boolean",
-            "default": false,
-            "description": "Enable BiG-SLiCE post-processing on antiSMASH GBKs",
-            "fa_icon": "fa-bacteria"
-        },
-        "bigslice_models": {
-            "type": "string",
-            "format": "path",
-            "description": "Path to BiG-SLiCE models directory (e.g. bigslice-models.2022-11-30)"
-        },
-        "bigslice_dataset_name": {
-            "type": "string",
-            "default": "dataset_1",
-            "description": "Dataset name used to structure BiG-SLiCE input"
-        },
-        "bigslice_input_root": {
-            "type": "string",
-            "default": "bigslice_input",
-            "description": "Root folder where BiG-SLiCE input will be assembled"
-        },
-        "bigslice_taxonomy": {
-            "type": ["string","null"],
-            "format": "path",
-            "default": null,
-            "description": "Optional GTDB taxonomy TSV (8 columns). If absent, a placeholder with 'Unknown' is generated."
+    "title": "BiG-SLiCE",
+    "description": "Rulează BiG-SLiCE peste GBK-urile antiSMASH",
+    "type": "object",
+    "properties": {
+      "run_bigslice": {
+        "type": "boolean",
+        "default": false,
+        "description": "Activează pașii BiG-SLiCE"
+      },
+      "bigslice_models": {
+        "type": "string",
+        "format": "path",
+        "description": "Calea către folderul modelelor BiG-SLiCE (ex. bigslice-models.2022-11-30)"
+      },
+      "bigslice_dataset_name": {
+        "type": "string",
+        "default": "antismash",
+        "description": "Numele dataset-ului folosit ca subfolder"
+      },
+      "bigslice_taxonomy": {
+        "type": ["string", "null"],
+        "format": "path",
+        "default": null,
+        "description": "TSV opțional (8 coloane GTDB). Dacă e null, se scrie un fișier gol cu antet."
       }
     }
   }

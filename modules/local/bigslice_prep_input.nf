@@ -1,26 +1,31 @@
-process BIGSLICE_RUN {
-  tag "${params.bigslice_dataset_name}"
+process BIGSLICE_PREP_INPUT {
+  label 'bigslice'
+  tag "dataset=${params.bigslice_dataset_name}"
 
   input:
-    path input_dir
-    path models_dir
+    val antismash_dirs
 
   output:
-    path("result")       emit: result
-    path("versions.yml") emit: versions
+    path "input/${params.bigslice_dataset_name}/"
 
   script:
   """
   set -euo pipefail
-  mkdir -p result/cache
 
-  bigslice -i "\${input_dir}" \\
-           --program_db_folder "\${models_dir}" \\
-           "\${PWD}"
+  DATASET="${params.bigslice_dataset_name}"
+  OUT="input/${params.bigslice_dataset_name}"
+  mkdir -p "\$OUT/taxonomy"
 
-  cat <<EOF > versions.yml
-BIGSLICE_RUN:
-  bigslice: $(bigslice --version 2>&1 || echo unknown)
-EOF
+  for d in ${antismash_dirs.collect{ "\"$it\"" }.join(' ')}; do
+    [ -d "\$d" ] || continue
+    find "\$d" -type f \\( -name "*.region*.gbk" -o -name "*.gbk" \\) -print0 \
+      | xargs -0 -I{} cp -n "{}" "\$OUT/"
+  done
+
+  if [ "${params.bigslice_taxonomy ?: ''}" != "" ]; then
+    cp "${params.bigslice_taxonomy}" "\$OUT/taxonomy/dataset_taxonomy.tsv"
+  else
+    printf "accession\\ttaxdomain\\tphylum\\tclass\\torder\\tfamily\\tgenus\\tspecies\\n" > "\$OUT/taxonomy/dataset_taxonomy.tsv"
+  fi
   """
 }
