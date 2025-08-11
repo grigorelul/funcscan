@@ -11,12 +11,18 @@ process BIGSLICE_RUN {
 
   script:
   """
-set -euo pipefail
+  set -euo pipefail
 
-INPUT_ROOT="$(dirname "antismash")"
-rm -rf output 2>/dev/null || true
+  # Nextflow îți montează direct intrarea ca folder local -> il  folosește ca atare
+  INPUT_ROOT="${input_root}"
 
-bigslice -i "${INPUT_ROOT}" --program_db_folder "bigslice-models.2022-11-30" output
+  # evităm promptul interactiv „Folder output exists! ... ?”
+  rm -rf output 2>/dev/null || true
+
+  bigslice \
+    -i "${INPUT_ROOT}" \
+    --program_db_folder "${models_dir}" \
+    output
 
   """
 }
