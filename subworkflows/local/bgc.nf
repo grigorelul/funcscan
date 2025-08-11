@@ -83,9 +83,9 @@ workflow BGC {
         BIGSLICE_RUN(
             BIGSLICE_PREP_INPUT.out.input_dir,   // devine 'input_dir' în proces
             file(params.bigslice_models)         // devine 'models_dir' în proces
-)
+            )
 
-
+        }
     }
 
     // DEEPBGC
