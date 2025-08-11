@@ -3,25 +3,25 @@ process BIGSLICE_RUN {
   tag "dataset=${params.bigslice_dataset_name}"
 
   input:
-    path dataset_dir
+    path input_dir
     path models_dir
 
   output:
-    path "output"
+    path "output/**", emit: outdir
+    path "versions.yml", emit: versions
 
   script:
   """
-set -euo pipefail
+  set -euo pipefail
 
-INPUT_ROOT="${input_dir}"
+  # evităm promptul interactiv ("Folder output exists?..."):
+  rm -rf output 2>/dev/null || true
 
-# evităm promptul interactiv 'Folder output exists?'
-rm -rf output 2>/dev/null || true
+  bigslice \
+    -i "${input_dir}" \
+    --program_db_folder "${models_dir}" \
+    output
 
-bigslice \
-  -i "${INPUT_ROOT}" \
-  --program_db_folder "${models_dir}" \
-  output
-
+  printf '"NFCORE_FUNCSCAN:FUNCSCAN:BGC:BIGSLICE_RUN":\\n  bigslice: "%s"\\n' "$(bigslice --version 2>&1 || echo unknown)" > versions.yml || true
   """
 }
