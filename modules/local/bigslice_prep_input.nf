@@ -33,11 +33,9 @@ process BIGSLICE_PREP_INPUT {
 
   # 3) datasets.tsv (4 coloane)
   mkdir -p input
-  printf "dataset_name\\tdataset_path\\ttaxonomy_path\\tdescription\\n" > input/datasets.tsv
-  printf "%s\\t%s\\t%s\\t%s\\n" \
-         "${DATASET}" \
-         "${DATASET}" \
-         "${DATASET}/taxonomy/dataset_taxonomy.tsv" \
-         "antiSMASH ${DATASET}" >> input/datasets.tsv
+  printf "%s\t%s\t%s\t%s\n" \
+    "$DATASET" "$DATASET" "$DATASET/taxonomy/dataset_taxonomy.tsv" "antiSMASH $DATASET" \
+    > "input/datasets.tsv"
+
   """
 }
