@@ -2,11 +2,11 @@ process BIGSLICE_RUN {
   label 'bigslice'
 
   input:
-  path input_dir
-  path models_dir
+    path input_dir
+    path models_dir
 
   output:
-  path "output", emit: outdir
+    path "output", emit: outdir
 
   """
   set -euo pipefail
