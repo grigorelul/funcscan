@@ -6,7 +6,7 @@ process BIGSLICE_PREP_INPUT {
     val antismash_dirs
 
   output:
-    path "input/${params.bigslice_dataset_name}/"
+    path "input", emit: input_dir
 
   script:
   """
