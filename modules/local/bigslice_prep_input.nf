@@ -24,7 +24,7 @@ process BIGSLICE_PREP_INPUT {
     ln -sfn "\$d" "\$OUT/\$bn"
   done
 
-  # 2) taxonomy: antet + câte o linie per folder-probă (Unknown dacă nu dai GTDB)
+  # 2) taxonomy: antet + câte o linie per folder-probă (Unknown dacă nu dam GTDB)
   printf "accession\\ttaxdomain\\tphylum\\tclass\\torder\\tfamily\\tgenus\\tspecies\\n" > "\$OUT/taxonomy/dataset_taxonomy.tsv"
   for d in ${antismash_dirs.collect{ "\"$it\"" }.join(' ')}; do
     bn=\$(basename "\$d")

@@ -9,7 +9,7 @@ process BIGSLICE_RUN {
     path "output", emit: outdir
 
   """
-  set -euo pipefail
+  set -euo pipefail  
   rm -rf output 2>/dev/null || true
 
   bigslice \

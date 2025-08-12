@@ -69,7 +69,7 @@ workflow BGC {
 
         ch_bgcresults_for_combgc = ch_bgcresults_for_combgc.mix(ch_antismashresults_for_combgc)
 
-                    // colectăm directoarele antiSMASH (unul per probă)
+                    // colectăm directoarele antiSMASH (unul per proba)
         ch_antismash_dirs = ANTISMASH_ANTISMASH.out.html
         .map { meta, html -> html.parent }
         .collect()
