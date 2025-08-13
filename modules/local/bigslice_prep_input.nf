@@ -1,41 +1,56 @@
 process BIGSLICE_PREP_INPUT {
   label 'bigslice'
-  tag "dataset=${params.bigslice_dataset_name}"
+
+  // copiem input-ul în outdir (nu symlink)
+  publishDir [
+    path: "${params.outdir}/bigslice/${params.bigslice_dataset_name}",
+    mode: 'copy',
+    pattern: 'input/**'
+  ]
 
   input:
-  val antismash_dirs
+    val antismash_dirs   // lista de directoare antiSMASH (unul pe probă)
 
   output:
-  path "input", emit: input_dir
+    path "input", emit: input_dir   // directorul 'input' complet pe care îl dăm mai departe
 
   script:
-  def DATASET = params.bigslice_dataset_name
-  def OUT     = "input/${DATASET}"
   """
   set -euo pipefail
 
-  OUT="${OUT}"
-  mkdir -p "\$OUT/taxonomy"
+  DS="\${params.bigslice_dataset_name}"
+  ROOT="input"
+  OUT="\$ROOT/\$DS"
+  TAX="\$OUT/taxonomy"
 
-  # 1) leagă fiecare director antiSMASH ca subfolder în dataset
+  rm -rf "\$ROOT"
+  mkdir -p "\$OUT" "\$TAX"
+
+  # copiem .gbk pe fiecare probă în subfoldere separate
   for d in ${antismash_dirs.collect{ "\"$it\"" }.join(' ')}; do
     [ -d "\$d" ] || continue
-    bn=\$(basename "\$d")
-    ln -sfn "\$d" "\$OUT/\$bn"
+    sample=\$(basename "\$d")
+    mkdir -p "\$OUT/\$sample"
+    find "\$d" -type f \\( -name "*.region*.gbk" -o -name "*.gbk" \\) -print0 \
+      | xargs -0 -I{} cp -f "{}" "\$OUT/\$sample/"
   done
 
-  # 2) taxonomy: antet + câte o linie per folder-probă (Unknown dacă nu dam GTDB)
-  printf "accession\\ttaxdomain\\tphylum\\tclass\\torder\\tfamily\\tgenus\\tspecies\\n" > "\$OUT/taxonomy/dataset_taxonomy.tsv"
-  for d in ${antismash_dirs.collect{ "\"$it\"" }.join(' ')}; do
-    bn=\$(basename "\$d")
-    printf "%s/\\tUnknown\\tUnknown\\tUnknown\\tUnknown\\tUnknown\\tUnknown\\tUnknown\\n" "\$bn" >> "\$OUT/taxonomy/dataset_taxonomy.tsv"
-  done
+  # taxonomy: dacă ai dat un fișier, îl copiem; altfel generăm "Unknown" per sample
+  if [ -n "\${params.bigslice_taxonomy:-}" ]; then
+    cp "\${params.bigslice_taxonomy}" "\$TAX/dataset_taxonomy.tsv"
+  else
+    printf "accession\\ttaxdomain\\tphylum\\tclass\\torder\\tfamily\\tgenus\\tspecies\\n" > "\$TAX/dataset_taxonomy.tsv"
+    for d in "\$OUT"/*/; do
+      [ -d "\$d" ] || continue
+      acc=\$(basename "\$d")/
+      printf "%s\\tUnknown\\tUnknown\\tUnknown\\tUnknown\\tUnknown\\tUnknown\\tUnknown\\n" "\$acc" >> "\$TAX/dataset_taxonomy.tsv"
+    done
+  fi
 
-  # 3) datasets.tsv (4 coloane)
-  mkdir -p input
-  printf "%s\t%s\t%s\t%s\n" \
-    "$DATASET" "$DATASET" "$DATASET/taxonomy/dataset_taxonomy.tsv" "antiSMASH $DATASET" \
-    > "input/datasets.tsv"
-
+  # datasets.tsv la rădăcina "input/"
+  cat > "\$ROOT/datasets.tsv" <<EOF
+dataset_name\tdataset_path\ttaxonomy_path\tdescription
+\$DS\t\$DS\t\$DS/taxonomy/dataset_taxonomy.tsv\tantiSMASH \$DS
+EOF
   """
 }
