@@ -2,26 +2,26 @@ process BIGSLICE_PREP_INPUT {
   label 'bigslice'
 
   input:
-    val antismash_dirs   // listă de directoare (deja .collect() în subworkflow)
+    val antismash_dirs   // listă colectată .collect()
 
   output:
     path "input", emit: input_dir
 
   script:
-    // Folosim direct params în interpolarea Nextflow (nu în bash),
-    // și pregătim lista de directoare cu ghilimele.
-    def DS = params.bigslice_dataset_name
+    // pregătesc lista pentru for-ul din bash
     def dirsQuoted = antismash_dirs.collect { "\"${it}\"" }.join(' ')
-
     """
     set -euo pipefail
 
-    ROOT="input"; OUT="\$ROOT/$DS"; TAX="\$OUT/taxonomy"
+    # Setez DS in BASH (nu doar Groovy)
+    DS="${params.bigslice_dataset_name}"
+
+    ROOT="input"; OUT="\$ROOT/\$DS"; TAX="\$OUT/taxonomy"
     rm -rf "\$ROOT"
     mkdir -p "\$OUT" "\$TAX"
 
-    # copiem .gbk/.region*.gbk pe subfoldere de sample
-    for d in $dirsQuoted; do
+    # copiem .gbk/.region*.gbk pe subfoldere per-sample
+    for d in ${dirsQuoted}; do
       [ -d "\$d" ] || continue
       sample=\$(basename "\$d")
       mkdir -p "\$OUT/\$sample"
@@ -29,7 +29,7 @@ process BIGSLICE_PREP_INPUT {
         | xargs -0 -I{} cp -f "{}" "\$OUT/\$sample/"
     done
 
-    # taxonomy într-un singur fișier
+    # taxonomy într-un singur fișier (o linie per sample)
     printf "accession\\ttaxdomain\\tphylum\\tclass\\torder\\tfamily\\tgenus\\tspecies\\n" > "\$TAX/dataset_taxonomy.tsv"
     for d in "\$OUT"/*/; do
       [ -d "\$d" ] || continue
@@ -39,8 +39,8 @@ process BIGSLICE_PREP_INPUT {
 
     # datasets.tsv la rădăcina input/
     cat > "\$ROOT/datasets.tsv" <<EOF
-    dataset_name\tdataset_path\ttaxonomy_path\tdescription
-    $DS\t$DS\t$DS/taxonomy/dataset_taxonomy.tsv\tantiSMASH $DS
-    EOF
+dataset_name\tdataset_path\ttaxonomy_path\tdescription
+\$DS\t\$DS\t\$DS/taxonomy/dataset_taxonomy.tsv\tantiSMASH \$DS
+EOF
     """
 }
