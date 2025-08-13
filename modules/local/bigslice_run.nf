@@ -1,12 +1,7 @@
 process BIGSLICE_RUN {
   label 'bigslice'
 
-  // copiem rezultatul bigslice (nu symlink)
-  publishDir [
-    path: "${params.outdir}/bigslice/${params.bigslice_dataset_name}",
-    mode: 'copy',
-    pattern: 'output/**'
-  ]
+
 
   input:
     path input_dir

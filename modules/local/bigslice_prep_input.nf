@@ -1,12 +1,6 @@
 process BIGSLICE_PREP_INPUT {
   label 'bigslice'
 
-  // copiem input-ul în outdir (nu symlink)
-  publishDir [
-    path: "${params.outdir}/bigslice/${params.bigslice_dataset_name}",
-    mode: 'copy',
-    pattern: 'input/**'
-  ]
 
   input:
     val antismash_dirs   // lista de directoare antiSMASH (unul pe probă)
