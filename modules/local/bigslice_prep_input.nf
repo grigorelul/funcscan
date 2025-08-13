@@ -1,53 +1,46 @@
 process BIGSLICE_PREP_INPUT {
   label 'bigslice'
-  tag "dataset=${params.bigslice_dataset_name}"
 
   input:
-    val antismash_dirs
+    val antismash_dirs   // listă de directoare (deja .collect() în subworkflow)
 
   output:
     path "input", emit: input_dir
-    path "versions.yml", emit: versions
 
   script:
-  """
-  set -euo pipefail
+    // Folosim direct params în interpolarea Nextflow (nu în bash),
+    // și pregătim lista de directoare cu ghilimele.
+    def DS = params.bigslice_dataset_name
+    def dirsQuoted = antismash_dirs.collect { "\"${it}\"" }.join(' ')
 
-  DS="${params.bigslice_dataset_name}"
-  ROOT="input"
-  OUT="$ROOT/$DS"
-  TAX="$OUT/taxonomy"
+    """
+    set -euo pipefail
 
-  rm -rf "$ROOT"
-  mkdir -p "$OUT" "$TAX"
+    ROOT="input"; OUT="\$ROOT/$DS"; TAX="\$OUT/taxonomy"
+    rm -rf "\$ROOT"
+    mkdir -p "\$OUT" "\$TAX"
 
-  for d in ${antismash_dirs.collect{ "\"$it\"" }.join(' ')}; do
-    [ -d "$d" ] || continue
-    sample=\$(basename "\$d")
-    mkdir -p "\$OUT/\$sample"
-    find "\$d" -type f \\( -name "*.region*.gbk" -o -name "*.gbk" \\) -print0 \
-      | xargs -0 -I{} cp -f "{}" "\$OUT/\$sample/"
-  done
-
-  if [ -n "${params.bigslice_taxonomy:-}" ]; then
-    cp "${params.bigslice_taxonomy}" "$TAX/dataset_taxonomy.tsv"
-  else
-    printf "accession\\ttaxdomain\\tphylum\\tclass\\torder\\tfamily\\tgenus\\tspecies\\n" > "$TAX/dataset_taxonomy.tsv"
-    for d in "$OUT"/*/; do
-      [ -d "$d" ] || continue
-      acc=\$(basename "\$d")/
-      printf "%s\\tUnknown\\tUnknown\\tUnknown\\tUnknown\\tUnknown\\tUnknown\\tUnknown\\n" "\$acc" >> "$TAX/dataset_taxonomy.tsv"
+    # copiem .gbk/.region*.gbk pe subfoldere de sample
+    for d in $dirsQuoted; do
+      [ -d "\$d" ] || continue
+      sample=\$(basename "\$d")
+      mkdir -p "\$OUT/\$sample"
+      find "\$d" -type f \\( -name "*.region*.gbk" -o -name "*.gbk" \\) -print0 \
+        | xargs -0 -I{} cp -f "{}" "\$OUT/\$sample/"
     done
-  fi
 
-  cat > "$ROOT/datasets.tsv" <<EOF
-dataset_name\tdataset_path\taxonomy_path\tdescription
-$DS\t$DS\t$DS/taxonomy/dataset_taxonomy.tsv\tantiSMASH $DS
-EOF
+    # taxonomy într-un singur fișier
+    printf "accession\\ttaxdomain\\tphylum\\tclass\\torder\\tfamily\\tgenus\\tspecies\\n" > "\$TAX/dataset_taxonomy.tsv"
+    for d in "\$OUT"/*/; do
+      [ -d "\$d" ] || continue
+      acc=\$(basename "\$d")/
+      printf "%s\\tUnknown\\tUnknown\\tUnknown\\tUnknown\\tUnknown\\tUnknown\\tUnknown\\n" "\$acc" >> "\$TAX/dataset_taxonomy.tsv"
+    done
 
-  cat <<-END_VERSIONS > versions.yml
-  "NFCORE_FUNCSCAN:FUNCSCAN:BGC:BIGSLICE_PREP_INPUT":
-      bigslice: $(bigslice --version 2>&1 || echo unknown)
-  END_VERSIONS
-  """
+    # datasets.tsv la rădăcina input/
+    cat > "\$ROOT/datasets.tsv" <<EOF
+    dataset_name\tdataset_path\ttaxonomy_path\tdescription
+    $DS\t$DS\t$DS/taxonomy/dataset_taxonomy.tsv\tantiSMASH $DS
+    EOF
+    """
 }

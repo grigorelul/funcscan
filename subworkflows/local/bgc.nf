@@ -12,8 +12,8 @@ include { DEEPBGC_PIPELINE                       } from '../../modules/nf-core/d
 include { COMBGC                                 } from '../../modules/local/combgc'
 include { TABIX_BGZIP as BGC_TABIX_BGZIP         } from '../../modules/nf-core/tabix/bgzip/main'
 include { MERGE_TAXONOMY_COMBGC                  } from '../../modules/local/merge_taxonomy_combgc'
-include { BIGSLICE_PREP_INPUT } from '../modules/local/bigslice_prep_input.nf'
-include { BIGSLICE_RUN        } from '../modules/local/bigslice_run.nf'
+include { BIGSLICE_PREP_INPUT } from '../modules/local/bigslice_prep_input'
+include { BIGSLICE_RUN        } from '../modules/local/bigslice_run'
 
 
 
@@ -70,28 +70,22 @@ workflow BGC {
 
         ch_bgcresults_for_combgc = ch_bgcresults_for_combgc.mix(ch_antismashresults_for_combgc)
 
-                // colectăm directoarele antiSMASH (unul per probă) și le strângem într-o listă
-        def ch_antismash_dirs = ANTISMASH_ANTISMASH.out.html
+                // colectăm directoarele antiSMASH (unul per probă)
+        ch_antismash_dirs = ANTISMASH_ANTISMASH.out.html
         .map { meta, html -> html.parent }
         .collect()
 
         if( params.run_bigslice ) {
-        // fișier taxonomy opțional: dacă e definit în config/CLI, îl pasăm, altfel null
-        def tax_path = params.bigslice_taxonomy ? file(params.bigslice_taxonomy) : null
+        // 1) pregătim input-ul BiG-SLiCE
+        BIGSLICE_PREP_INPUT( ch_antismash_dirs )
 
-        // 1) pregătim input-ul (copiem .gbk + taxonomy + datasets.tsv)
-        BIGSLICE_PREP_INPUT(
-            params.bigslice_dataset_name,  // ds (ex: 'antismash')
-            ch_antismash_dirs,             // dirs: lista cu folderele antiSMASH (după .collect())
-            tax_path                       // taxonomy TSV (opțional)
-        )
-
-        // 2) rulăm BiG-SLiCE (modelele din parametru)
+        // 2) rulăm BiG-SLiCE
         BIGSLICE_RUN(
             BIGSLICE_PREP_INPUT.out.input_dir,
             file(params.bigslice_models)
         )
         }
+
     }
 
     // DEEPBGC
