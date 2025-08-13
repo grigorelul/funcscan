@@ -12,8 +12,8 @@ include { DEEPBGC_PIPELINE                       } from '../../modules/nf-core/d
 include { COMBGC                                 } from '../../modules/local/combgc'
 include { TABIX_BGZIP as BGC_TABIX_BGZIP         } from '../../modules/nf-core/tabix/bgzip/main'
 include { MERGE_TAXONOMY_COMBGC                  } from '../../modules/local/merge_taxonomy_combgc'
-include { BIGSLICE_PREP_INPUT } from '../modules/local/bigslice_prep_input'
-include { BIGSLICE_RUN        } from '../modules/local/bigslice_run'
+include { BIGSLICE_PREP_INPUT } from '../../modules/local/bigslice_prep_input'
+include { BIGSLICE_RUN        } from '../../modules/local/bigslice_run'
 
 
 
