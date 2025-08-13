@@ -69,22 +69,27 @@ workflow BGC {
 
         ch_bgcresults_for_combgc = ch_bgcresults_for_combgc.mix(ch_antismashresults_for_combgc)
 
-                    // colectăm directoarele antiSMASH (unul per proba)
-        ch_antismash_dirs = ANTISMASH_ANTISMASH.out.html
+                // colectăm directoarele antiSMASH (unul per probă) și le strângem într-o listă
+        def ch_antismash_dirs = ANTISMASH_ANTISMASH.out.html
         .map { meta, html -> html.parent }
         .collect()
 
-        // rulăm BiG-SLiCE doar dacă a fost cerut
         if( params.run_bigslice ) {
-        // 1) pregătim input-ul (copiem .gbk + taxonomy placeholder/opțional)
-        BIGSLICE_PREP_INPUT( ch_antismash_dirs )
+        // fișier taxonomy opțional: dacă e definit în config/CLI, îl pasăm, altfel null
+        def tax_path = params.bigslice_taxonomy ? file(params.bigslice_taxonomy) : null
 
-        // 2) rulăm BiG-SLiCE (modelele vin din parametru)
+        // 1) pregătim input-ul (copiem .gbk + taxonomy + datasets.tsv)
+        BIGSLICE_PREP_INPUT(
+            params.bigslice_dataset_name,  // ds (ex: 'antismash')
+            ch_antismash_dirs,             // dirs: lista cu folderele antiSMASH (după .collect())
+            tax_path                       // taxonomy TSV (opțional)
+        )
+
+        // 2) rulăm BiG-SLiCE (modelele din parametru)
         BIGSLICE_RUN(
-            BIGSLICE_PREP_INPUT.out.input_dir,   // devine 'input_dir' în proces
-            file(params.bigslice_models)         // devine 'models_dir' în proces
-            )
-
+            BIGSLICE_PREP_INPUT.out.input_dir,
+            file(params.bigslice_models)
+        )
         }
     }
 
