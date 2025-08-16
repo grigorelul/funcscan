@@ -70,10 +70,10 @@ workflow BGC {
 
         ch_bgcresults_for_combgc = ch_bgcresults_for_combgc.mix(ch_antismashresults_for_combgc)
 
-                // colectăm fișierele GBK cu regiuni BGC de la antiSMASH (păstrăm meta per sample)
-        ch_antismash_dirs = ANTISMASH_ANTISMASH.out.gbk_results
-            .map { meta, gbk_files -> gbk_files }
-            .collect()
+                // colectăm directoarele antiSMASH (unul per probă)
+        ch_antismash_dirs = ANTISMASH_ANTISMASH.out.html
+        .map { meta, html -> html.parent }
+        .collect()
 
         if( params.run_bigslice ) {
         // 1) pregătim input-ul BiG-SLiCE
