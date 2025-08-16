@@ -77,7 +77,11 @@ workflow BGC {
 
         if( params.run_bigslice ) {
         // 1) pregătim input-ul BiG-SLiCE
-        BIGSLICE_PREP_INPUT( ch_antismash_dirs )
+        BIGSLICE_PREP_INPUT( 
+            params.bigslice_outdir,
+            params.bigslice_dataset_name,
+            params.bigslice_taxonomy
+        )
 
         // 2) rulăm BiG-SLiCE
         BIGSLICE_RUN(

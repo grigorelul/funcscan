@@ -7,6 +7,7 @@ process BIGSLICE_PREP_INPUT {
   val taxonomy_src                 // ex: params.bigslice_taxonomy (poate fi null)
 
   output:
+  path "${outdir}/bigslice/input", emit: input_dir
   path "${outdir}/bigslice/input/datasets.tsv", emit: datasets_tsv
   path "${outdir}/bigslice/input/taxonomy/dataset_taxonomy.tsv", emit: taxonomy_tsv
 
