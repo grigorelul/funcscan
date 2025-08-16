@@ -1,5 +1,5 @@
-process PREP_BIGSLICE_INPUT {
-  tag "prep_bigslice_input"
+process BIGSLICE_PREP_INPUT {
+  tag "bigslice_prep_input"
 
   input:
   val outdir                       // ai deja setat în workflow
