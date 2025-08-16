@@ -39,11 +39,11 @@ process BIGSLICE_PREP_INPUT {
     cp "${params.bigslice_taxonomy}" "\$TAXROOT/dataset_taxonomy.tsv"
   else
     # generăm placeholder „Unknown"
-    printf "accession\\ttaxdomain\\tphylum\\tclass\\torder\\tfamily\\tgenus\\tspecies\\n" > "\$TAXROOT/dataset_taxonomy.tsv"
+    printf "accession\\ttaxdomain\\tphylum\\tclass\\torder\\tfamily\\tgenus\\tspecies\\torganism\\n" > "\$TAXROOT/dataset_taxonomy.tsv"
     for d in "\$OUT"/*/; do
       [ -d "\$d" ] || continue
       acc=\$(basename "\$d")/
-      printf "%s\\tUnknown\\tUnknown\\tUnknown\\tUnknown\\tUnknown\\tUnknown\\tUnknown\\n" "\$acc" >> "\$TAXROOT/dataset_taxonomy.tsv"
+      printf "%s\\tUnknown\\tUnknown\\tUnknown\\tUnknown\\tUnknown\\tUnknown\\tUnknown\\tUnknown\\n" "\$acc" >> "\$TAXROOT/dataset_taxonomy.tsv"
     done
   fi
 
