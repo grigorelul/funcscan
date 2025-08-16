@@ -1,61 +1,56 @@
 process BIGSLICE_PREP_INPUT {
-  tag "bigslice_prep_input"
+  label 'bigslice'
+  tag "dataset=${params.bigslice_dataset_name}"
 
   input:
-  val dataset_name                 // ex: params.bigslice_dataset_name ?: 'antismash'
-  val taxonomy_src                 // ex: params.bigslice_taxonomy (poate fi null)
-  path antismash_dirs              // directoarele antiSMASH colectate
+  // lista directoarelor antiSMASH (câte unul per sample)
+  val antismash_dirs
 
   output:
+  // întregul folder "input" (va conține DS/, taxonomy/, datasets.tsv)
   path "input", emit: input_dir
-  path "input/datasets.tsv", emit: datasets_tsv
-  path "input/taxonomy/dataset_taxonomy.tsv", emit: taxonomy_tsv
 
   script:
+  // pregătesc lista de directoare pt. for-loop în bash
+  def quoted = antismash_dirs.collect { "\"${it}\"" }.join(' ')
   """
   set -euo pipefail
 
-  # Creăm structura în work directory
-  mkdir -p "input/${dataset_name}" "input/taxonomy"
+  ROOT="input"
+  DS="${params.bigslice_dataset_name}"
+  OUT="\$ROOT/\$DS"
+  TAXROOT="\$ROOT/taxonomy"
 
-  # Copiem fișierele GBK de la antiSMASH în directorul dataset-ului
-  for antismash_dir in ${antismash_dirs}; do
-      if [ -d "\$antismash_dir" ]; then
-          # Căutăm fișiere .gbk în directorul antiSMASH și le copiem
-          find "\$antismash_dir" -name "*.gbk" -type f | while read gbk_file; do
-              if [ -s "\$gbk_file" ]; then
-                  basename_file=\$(basename "\$gbk_file")
-                  cp "\$gbk_file" "input/${dataset_name}/\$basename_file"
-                  echo "Copied: \$gbk_file -> input/${dataset_name}/\$basename_file"
-              fi
-          done
-      fi
+  rm -rf "\$ROOT"
+  mkdir -p "\$OUT" "\$TAXROOT"
+
+  # copiem .gbk pe fiecare probă în subfoldere separate
+  for d in ${quoted}; do
+    [ -d "\$d" ] || continue
+    sample=\$(basename "\$d")
+    mkdir -p "\$OUT/\$sample"
+    find "\$d" -type f \\( -name "*.region*.gbk" -o -name "*.gbk" \\) -print0 \
+      | xargs -0 -I{} cp -f "{}" "\$OUT/\$sample/"
   done
 
-  # --- datasets.tsv (TAB-uri garantate) ---
-  printf "# dataset_name\\tdataset_path\\ttaxonomy_path\\tdescription\\n" \\
-    > "input/datasets.tsv"
-  printf "%s\\t%s\\t%s\\t%s\\n" \\
-    "${dataset_name}" "${dataset_name}" "taxonomy/dataset_taxonomy.tsv" "antiSMASH ${dataset_name}" \\
-    >> "input/datasets.tsv"
-
-  # --- taxonomy ---
-  if [ -n "${taxonomy_src}" ] && [ -f "${taxonomy_src}" ] && [ -s "${taxonomy_src}" ]; then
-      # copiem exact ce ai dat tu
-      cp "${taxonomy_src}" "input/taxonomy/dataset_taxonomy.tsv"
+  # taxonomie: un singur fișier cu header + câte o linie pe sample
+  if [ -n "${params.bigslice_taxonomy ?: ''}" ]; then
+    # dacă l-ai dat prin parametru, îl copiem ca atare
+    cp "${params.bigslice_taxonomy}" "\$TAXROOT/dataset_taxonomy.tsv"
   else
-      # fallback: doar antetul în 9 coloane (format BiG-SLiCE)
-      printf "# Genome folder\\tKingdom\\tPhylum\\tClass\\tOrder\\tFamily\\tGenus\\tSpecies\\tOrganism\\n" \\
-        > "input/taxonomy/dataset_taxonomy.tsv"
+    # generăm placeholder „Unknown"
+    printf "accession\\ttaxdomain\\tphylum\\tclass\\torder\\tfamily\\tgenus\\tspecies\\n" > "\$TAXROOT/dataset_taxonomy.tsv"
+    for d in "\$OUT"/*/; do
+      [ -d "\$d" ] || continue
+      acc=\$(basename "\$d")/
+      printf "%s\\tUnknown\\tUnknown\\tUnknown\\tUnknown\\tUnknown\\tUnknown\\tUnknown\\n" "\$acc" >> "\$TAXROOT/dataset_taxonomy.tsv"
+    done
   fi
 
-  # mici verificări de sanity (nu opresc rularea, doar ajută la debug)
-  awk -F '\\t' 'NR==1{print "datasets.tsv header cols:", NF}' "input/datasets.tsv" >&2 || true
-  awk -F '\\t' 'NR==1{print "taxonomy.tsv header cols:", NF}' "input/taxonomy/dataset_taxonomy.tsv" >&2 || true
-  
-  # Verificăm câte fișiere GBK am copiat
-  gbk_count=\$(find "input/${dataset_name}" -name "*.gbk" -type f | wc -l)
-  echo "Total GBK files copied: \$gbk_count" >&2
-  ls -la "input/${dataset_name}/" >&2 || true
+  # datasets.tsv cu header comentat
+  {
+    echo "# dataset_name\\tdataset_path\\ttaxonomy_path\\tdescription"
+    printf "%s\\t%s\\t%s\\t%s\\n" "\$DS" "\$DS" "taxonomy/dataset_taxonomy.tsv" "antiSMASH \$DS"
+  } > "\$ROOT/datasets.tsv"
   """
 }
