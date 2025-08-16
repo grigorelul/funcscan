@@ -80,7 +80,7 @@ workflow BGC {
         BIGSLICE_PREP_INPUT( 
             params.bigslice_outdir,
             params.bigslice_dataset_name,
-            params.bigslice_taxonomy
+            params.bigslice_taxonomy ?: ""
         )
 
         // 2) rulăm BiG-SLiCE
