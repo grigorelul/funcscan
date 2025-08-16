@@ -79,7 +79,8 @@ workflow BGC {
         // 1) pregătim input-ul BiG-SLiCE
         BIGSLICE_PREP_INPUT( 
             params.bigslice_dataset_name,
-            params.bigslice_taxonomy ?: ""
+            params.bigslice_taxonomy ?: "",
+            ch_antismash_dirs
         )
 
         // 2) rulăm BiG-SLiCE
