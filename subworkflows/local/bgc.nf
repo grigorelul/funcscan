@@ -78,7 +78,6 @@ workflow BGC {
         if( params.run_bigslice ) {
         // 1) pregătim input-ul BiG-SLiCE
         BIGSLICE_PREP_INPUT( 
-            params.bigslice_outdir,
             params.bigslice_dataset_name,
             params.bigslice_taxonomy ?: ""
         )
