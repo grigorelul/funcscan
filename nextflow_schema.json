@@ -1605,29 +1605,29 @@
 
     "bigslice_options": {
     "title": "BiG-SLiCE",
-    "description": "Rulează BiG-SLiCE peste GBK-urile antiSMASH",
+    "description": "Run BiG-SLiCE over antiSMASH GBK files",
     "type": "object",
     "properties": {
       "run_bigslice": {
         "type": "boolean",
         "default": false,
-        "description": "Activează pașii BiG-SLiCE"
+        "description": "Enable BiG-SLiCE analysis steps"
       },
       "bigslice_models": {
         "type": "string",
         "format": "path",
-        "description": "Calea către folderul modelelor BiG-SLiCE (ex. bigslice-models.2022-11-30)"
+        "description": "Path to BiG-SLiCE models folder (e.g. bigslice-models.2022-11-30)"
       },
       "bigslice_dataset_name": {
         "type": "string",
         "default": "antismash",
-        "description": "Numele dataset-ului folosit ca subfolder"
+        "description": "Dataset name used as subfolder"
       },
       "bigslice_taxonomy": {
         "type": ["string", "null"],
         "format": "path",
         "default": null,
-        "description": "TSV opțional (8 coloane GTDB). Dacă e null, se scrie un fișier gol cu antet."
+        "description": "Optional TSV file (9-column GTDB format). If null, an empty file with header is generated."
       }
     }
   }

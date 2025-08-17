@@ -70,19 +70,20 @@ workflow BGC {
 
         ch_bgcresults_for_combgc = ch_bgcresults_for_combgc.mix(ch_antismashresults_for_combgc)
 
-                // colectăm directoarele antiSMASH (unul per probă)
+        // collect antiSMASH output directories (one per sample) for BiG-SLiCE analysis
+        // transforms HTML output paths to their parent directories containing GBK files
         ch_antismash_dirs = ANTISMASH_ANTISMASH.out.html
-        .map { meta, html -> html.parent }
-        .collect()
+        .map { meta, html -> html.parent }  // extract parent directory from HTML file path
+        .collect()  // collect all directories into a single list for batch processing
 
         if( params.run_bigslice ) {
-        // 1) pregătim input-ul BiG-SLiCE
+        // 1) prepare BiG-SLiCE input structure from antiSMASH outputs
         BIGSLICE_PREP_INPUT( ch_antismash_dirs )
 
-        // 2) rulăm BiG-SLiCE
+        // 2) run BiG-SLiCE clustering analysis using prepared input and pre-trained models
         BIGSLICE_RUN(
-            BIGSLICE_PREP_INPUT.out.input_dir,
-            file(params.bigslice_models)
+            BIGSLICE_PREP_INPUT.out.input_dir,  // structured input directory from preparation step
+            file(params.bigslice_models)        // path to BiG-SLiCE model files
         )
         }
 
