@@ -8,12 +8,12 @@
  * BiG-SLiCE input structure:
  * input/
  * ├── datasets.tsv              # dataset configuration file
- * ├── <dataset_name>/           # BGC files organized by sample
+ * ├── <dataset_name>/           # GBK files organized by sample (each GBK contains a BGC region)
  * │   ├── sample1/
- * │   │   ├── region001.gbk
- * │   │   └── region002.gbk
+ * │   │   ├── region001.gbk     # BGC region 1 in GenBank format
+ * │   │   └── region002.gbk     # BGC region 2 in GenBank format
  * │   └── sample2/
- * │       └── region001.gbk
+ * │       └── region001.gbk     # BGC region 1 in GenBank format
  * └── taxonomy/
  *     └── dataset_taxonomy.tsv  # taxonomic information (9-column format)
  */
@@ -46,13 +46,14 @@ process BIGSLICE_PREP_INPUT {
   mkdir -p "\$OUT" "\$TAXROOT"
 
   # copy GBK files from each antiSMASH sample to separate subdirectories
-  # maintains per-sample organization required by BiG-SLiCE
+  # each GBK file contains a BGC region and maintains per-sample organization required by BiG-SLiCE
   for d in ${quoted}; do
     [ -d "\$d" ] || continue                # skip if directory doesn't exist
     sample=\$(basename "\$d")               # extract sample name from directory path
     mkdir -p "\$OUT/\$sample"               # create sample-specific subdirectory
     
     # find and copy all BGC region GBK files (*.region*.gbk or *.gbk)
+    # each file represents one biosynthetic gene cluster region
     find "\$d" -type f \\( -name "*.region*.gbk" -o -name "*.gbk" \\) -print0 \
       | xargs -0 -I{} cp -f "{}" "\$OUT/\$sample/"
   done

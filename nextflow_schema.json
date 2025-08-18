@@ -1628,6 +1628,12 @@
         "format": "path",
         "default": null,
         "description": "Optional TSV file (9-column GTDB format). If null, an empty file with header is generated."
+      },
+      "bigslice_outdir": {
+        "type": ["string", "null"],
+        "format": "path",
+        "default": null,
+        "description": "Output directory for BiG-SLiCE results. If not specified, uses outdir/bigslice or projectDir/bigslice_output as fallback."
       }
     }
   }
